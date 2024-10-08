@@ -16,10 +16,10 @@ function Task({id, name, prazo, description, horario, onDelete}) {
                <div className="task">
                     <div className="first-line">
                          <div>
-                              <h3 className="name">{name}</h3>
-                              <p className="prazo">{dataFormatada}  às  {horarioFormatado}</p>
+                              <input className="name" value={name} readOnly/>
+                              <input className="prazo" value={`${dataFormatada} às ${horarioFormatado}`} readOnly/>
                          </div>
-                         <XCircle size={40} className="apagar" onClick={handleDelete}/>
+                         <XCircle size={80} className="apagar" onClick={handleDelete}/>
                     </div>
                     <textarea className="description" disabled>{description}</textarea>
                </div>

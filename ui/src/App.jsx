@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import Task from './components/Task'
+import Search from './components/Search'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
   })
 
   const [tasks, setTasks] = useState([])
+  const [tasksFiltradas, setTasksFiltradas] = useState([])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,7 +33,8 @@ function App() {
 
         setTask({ name: '', description: '', prazo: '', horario: '' });
 
-        setTasks([data, ...tasks]);
+        setTasks([data, ...tasks])
+
       } else {
         console.error('Erro ao criar a tarefa:', response.statusText);
       }
@@ -61,8 +64,8 @@ function App() {
         method: 'DELETE',
       })
       if (response.ok) {
-        setTasks(tasks.filter(task => task.id !== id))     
-        console.log('Tarefa deletada com sucesso')
+        setTasks(tasks.filter(task => task.id !== id))
+
       } else {
         console.error('Erro ao deletar a tarefa:', response.statusText)
       }
@@ -80,7 +83,7 @@ function App() {
           <form onSubmit={handleSubmit}>
             <div className='label-input'>
               <label htmlFor='name'>Nome da tarefa</label>
-              <input type="text" value={task.name} onChange={handleChange} name='name' required/>
+              <input type="text" value={task.name} onChange={handleChange} name='name' required autoComplete='off'/>
             </div>
             <div className='label-input'>
               <label htmlFor='description'>Descrição da tarefa</label>
@@ -97,24 +100,37 @@ function App() {
             <button type='submit' className='create'>Create Task</button>
           </form>
         </div>
-          <div>
-            {tasks.length > 0 ? (
-              tasks.map((task) => (
-                <div className='task-app'>
-                  <Task
-                    key={task.id}
-                    id={task.id}
-                    name={task.name}
-                    description={task.description}
-                    prazo={task.prazo}
-                    horario={task.horario}
-                    onDelete={handleDeleteTask}
-                  />
-                </div>
-              ))
-            ) : (
-              <p>Nenhuma tarefa encontrada</p>
-            )}
+          <div className='box'>
+            <h1>Tarefas</h1>
+
+            <Search tasks={tasks} setTasksFiltradas={setTasksFiltradas}/>
+
+            <div className='tasks-box'>
+              { tasksFiltradas.length > 0 ? tasksFiltradas.map(task => 
+              <Task 
+                    key={task.id} 
+                    id={task.id} 
+                    name={task.name} 
+                    description={task.description} 
+                    prazo={task.prazo} 
+                    horario={task.horario} 
+                    onDelete={handleDeleteTask} />) 
+
+                  : tasks.length > 0 ? (
+                tasks.map((task) => (
+                  <div className='task-app'>
+                    <Task
+                      key={task.id}
+                      id={task.id}
+                      name={task.name}
+                      description={task.description}
+                      prazo={task.prazo}
+                      horario={task.horario}
+                      onDelete={handleDeleteTask}
+                    />
+                  </div>
+                ))) : (<p>Nenhuma tarefa encontrada</p>)}
+              </div>
           </div>
         </main>
     </>
