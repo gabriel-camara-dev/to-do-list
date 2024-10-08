@@ -1,0 +1,35 @@
+.task {
+     width: 350px;
+     min-height: 200px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 18px;
+     background-color: lightgray;
+     border-radius: 10px;
+     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.first-line {
+     width: 100%;
+     display: flex;
+     align-items: center;
+     justify-content: space-around;
+     margin-top: 10px;
+}
+
+.name {
+     font-size: 20px;
+}
+
+.apagar {
+     cursor: pointer;
+}
+
+.description {
+     width: 90%;
+     color: black;
+     font-size: 18px;
+     background-color: white;
+}
+
